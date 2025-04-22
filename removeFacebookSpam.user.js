@@ -2,8 +2,10 @@
 // @name         Remove Facebook Spam
 // @namespace    http://tampermonkey.net/
 // @copyright Cyrmax (2025)
-// @version      2025-04-22.2
-// @description  Removes some spammy elements on all Facebook pages
+// @version      2025-04-22.3
+// @description  Hides some spammy redundant elements on all Facebook pages
+// @description:ru  Скрывает избыточные элементы на всех страницах на Facebook
+// @description:hu  Automatikusan elrejt bizonyos kéretlen (spam) elemeket valamennyi Facebook-oldalon
 // @author       Cyrmax
 // @source https://github.com/cyrmax/removeFacebookSpam
 // @match        https://facebook.com/*
