@@ -24,21 +24,23 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          # Escape special characters and convert to single line
+          # Generate changelog with proper line breaks
           if [ -z "${{ steps.previous-tag.outputs.prev_tag }}" ]; then
-            LOG=$(git log --pretty=format:"- %s" | sed ':a;N;$!ba;s/\n/ /g' | sed 's/"/\\"/g')
+            LOG=$(git log --pretty=format:"- %s%n")
           else
-            LOG=$(git log --pretty=format:"- %s" ${{ steps.previous-tag.outputs.prev_tag }}..${{ github.ref_name }} | sed ':a;N;$!ba;s/\n/ /g' | sed 's/"/\\"/g')
+            LOG=$(git log --pretty=format:"- %s%n" ${{ steps.previous-tag.outputs.prev_tag }}..${{ github.ref_name }})
           fi
-          # Use environment file to handle multiline output
-          echo "changelog<<EOF" >> $GITHUB_ENV
-          echo "$LOG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          # Escape special characters but preserve newlines
+          LOG_ESCAPED=$(echo "$LOG" | sed 's/"/\\"/g')
+          # Multiline output using environment file
+          DELIMITER=$(openssl rand -hex 16)
+          echo "changelog<<${DELIMITER}" >> $GITHUB_ENV
+          echo "$LOG_ESCAPED" >> $GITHUB_ENV
+          echo "${DELIMITER}" >> $GITHUB_ENV
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
-          CHANGELOG: ${{ env.changelog }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
@@ -49,5 +51,6 @@ jobs:
             *Automatically generated from commit messages since ${{ steps.previous-tag.outputs.prev_tag || 'the beginning' }}*
 
             ${{ env.changelog }}
+
           files: |
             removeFacebookSpam.user.js
