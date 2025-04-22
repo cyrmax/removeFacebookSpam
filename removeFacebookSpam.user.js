@@ -1,13 +1,18 @@
 // ==UserScript==
 // @name         Remove Facebook Spam
 // @namespace    http://tampermonkey.net/
+// @copyright Cyrmax (2025)
 // @version      2025-04-22
 // @description  Removes some spammy elements on all Facebook pages
 // @author       Cyrmax
+// @source https://github.com/cyrmax/removeFacebookSpam
 // @match        https://facebook.com/*
 // @match        https://www.facebook.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=deepseek.com
 // @grant        none
+// @updateURL https://github.com/cyrmax/removeFacebookSpam/releases/download/latest/removeFacebookSpam.user.js
+// @downloadURL https://github.com/cyrmax/removeFacebookSpam/releases/download/latest/removeFacebookSpam.user.js
+// @supportURL https://github.com/cyrmax/removeFacebookSpam/issues
 // ==/UserScript==
 
 (function () {
